@@ -15,9 +15,59 @@ type : 'PUT',
 //the type of data we are expecting back from server, could be json too
 dataType: "json",
 success: function(data) {
-    console.log(data)
     link = "<a href=/page/" + data.id + ">";
     $('#top').html(link + data.text + '</a>');
+}
+});
+});
+$('#left_form').submit(function(ev){
+ev.preventDefault();
+ 
+//send an ajax request to our action
+$.ajax({
+url: "/left",
+//serialize the form and use it as data for our ajax request
+data: $(this).serialize(),
+type : 'PUT',
+//the type of data we are expecting back from server, could be json too
+dataType: "json",
+success: function(data) {
+    link = "<a href=/page/" + data.id + ">";
+    $('#left').html(link + data.text + '</a>');
+}
+});
+});
+$('#right_form').submit(function(ev){
+ev.preventDefault();
+ 
+//send an ajax request to our action
+$.ajax({
+url: "/right",
+//serialize the form and use it as data for our ajax request
+data: $(this).serialize(),
+type : 'PUT',
+//the type of data we are expecting back from server, could be json too
+dataType: "json",
+success: function(data) {
+    link = "<a href=/page/" + data.id + ">";
+    $('#right').html(link + data.text + '</a>');
+}
+});
+});
+$('#bottom_form').submit(function(ev){
+ev.preventDefault();
+ 
+//send an ajax request to our action
+$.ajax({
+url: "/bottom",
+//serialize the form and use it as data for our ajax request
+data: $(this).serialize(),
+type : 'PUT',
+//the type of data we are expecting back from server, could be json too
+dataType: "json",
+success: function(data) {
+    link = "<a href=/page/" + data.id + ">";
+    $('#bottom').html(link + data.text + '</a>');
 }
 });
 });
@@ -32,13 +82,13 @@ success: function(data) {
 <td></td>
 </tr>
 <tr>
-<td><form action="left" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td id="left"><form id="left_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
 <td><%= @page_content.centre %></td>
-<td><form action="right" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td id="right"><form id="right_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
 </tr>
 <tr>
 <td></td>
-<td><form action="bottom" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td id="bottom"><form id="bottom_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
 <td></td>
 </tr>
 </table>

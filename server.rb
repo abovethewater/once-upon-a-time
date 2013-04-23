@@ -40,6 +40,51 @@ put '/top' do
         { :id => next_id, :text => text }.to_json    
 end
 
+put '/left' do
+    @id = params[:id]
+    text = params[:text]
+    if !@id.nil?
+        @page_content = page_content_store[@id]
+        @page_content[:left] = text
+    end
+    
+    next_id = nextId
+    $page_content_store[next_id] = Content.new(text)
+    
+    content_type :json
+        { :id => next_id, :text => text }.to_json    
+end
+
+put '/right' do
+    @id = params[:id]
+    text = params[:text]
+    if !@id.nil?
+        @page_content = page_content_store[@id]
+        @page_content[:right] = text
+    end
+    
+    next_id = nextId
+    $page_content_store[next_id] = Content.new(text)
+    
+    content_type :json
+        { :id => next_id, :text => text }.to_json    
+end
+
+put '/bottom' do
+    @id = params[:id]
+    text = params[:text]
+    if !@id.nil?
+        @page_content = page_content_store[@id]
+        @page_content[:bottom] = text
+    end
+    
+    next_id = nextId
+    $page_content_store[next_id] = Content.new(text)
+    
+    content_type :json
+        { :id => next_id, :text => text }.to_json    
+end
+
 get '/page/:id' do | id |
     page_id = Integer(id)
     @page_content = $page_content_store[page_id]
