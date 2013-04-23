@@ -3,74 +3,27 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 $(function (){
-$('#top_form').submit(function(ev){
+    
+["top", "left", "bottom", "right"].map( function(location) {
+$('#' + location + '_form').submit(function(ev){
 ev.preventDefault();
  
-//send an ajax request to our action
 $.ajax({
-url: "/top",
-//serialize the form and use it as data for our ajax request
+url: "/" + location,
 data: $(this).serialize(),
 type : 'PUT',
-//the type of data we are expecting back from server, could be json too
 dataType: "json",
 success: function(data) {
-    link = "<a href=/page/" + data.id + ">";
-    $('#top').html(link + data.text + '</a>');
+    setTextInLocation('#' + location, data.id, data.text);
 }
 });
 });
-$('#left_form').submit(function(ev){
-ev.preventDefault();
- 
-//send an ajax request to our action
-$.ajax({
-url: "/left",
-//serialize the form and use it as data for our ajax request
-data: $(this).serialize(),
-type : 'PUT',
-//the type of data we are expecting back from server, could be json too
-dataType: "json",
-success: function(data) {
-    link = "<a href=/page/" + data.id + ">";
-    $('#left').html(link + data.text + '</a>');
-}
 });
-});
-$('#right_form').submit(function(ev){
-ev.preventDefault();
- 
-//send an ajax request to our action
-$.ajax({
-url: "/right",
-//serialize the form and use it as data for our ajax request
-data: $(this).serialize(),
-type : 'PUT',
-//the type of data we are expecting back from server, could be json too
-dataType: "json",
-success: function(data) {
-    link = "<a href=/page/" + data.id + ">";
-    $('#right').html(link + data.text + '</a>');
-}
-});
-});
-$('#bottom_form').submit(function(ev){
-ev.preventDefault();
- 
-//send an ajax request to our action
-$.ajax({
-url: "/bottom",
-//serialize the form and use it as data for our ajax request
-data: $(this).serialize(),
-type : 'PUT',
-//the type of data we are expecting back from server, could be json too
-dataType: "json",
-success: function(data) {
-    link = "<a href=/page/" + data.id + ">";
-    $('#bottom').html(link + data.text + '</a>');
-}
-});
-});
+
+function setTextInLocation(location, id, text) {
+    $(location).html("<a href=/page/" + id + ">" + text + '</a>');
+};
+
 });
 </script>
 </head>
