@@ -4,11 +4,12 @@ require 'erb'
 require 'json'
 
 class Content
-    attr_reader :centre, :top, :bottom, :left, :right
+    attr_accessor :centre, :top, :bottom, :left, :right
     
     def initialize(centre)
         @centre = centre
     end
+    
 end
 
 START_ID = 0
@@ -22,15 +23,16 @@ end
 
 get '/' do
     @page_content = $page_content_store[START_ID]
+    @page_id = $current_max_id
     erb :index
 end
 
 put '/top' do
-    @id = params[:id]
+    id = params[:id]
     text = params[:text]
-    if !@id.nil?
-        @page_content = page_content_store[@id]
-        @page_content[:top] = text
+    if !id.nil?
+        @page_content = $page_content_store[Integer(id)]
+        @page_content.top = text
     end
     
     next_id = nextId
@@ -43,9 +45,9 @@ end
 put '/left' do
     @id = params[:id]
     text = params[:text]
-    if !@id.nil?
-        @page_content = page_content_store[@id]
-        @page_content[:left] = text
+    if !id.nil?
+        @page_content = $page_content_store[Integer(id)]
+        @page_content.left = text
     end
     
     next_id = nextId
@@ -58,9 +60,9 @@ end
 put '/right' do
     @id = params[:id]
     text = params[:text]
-    if !@id.nil?
-        @page_content = page_content_store[@id]
-        @page_content[:right] = text
+    if !id.nil?
+        @page_content = $page_content_store[Integer(id)]
+        @page_content.right = text
     end
     
     next_id = nextId
@@ -73,9 +75,9 @@ end
 put '/bottom' do
     @id = params[:id]
     text = params[:text]
-    if !@id.nil?
-        @page_content = page_content_store[@id]
-        @page_content[:bottom] = text
+    if !id.nil?
+        @page_content = $page_content_store[Integer(id)]
+        @page_content.bottom = text
     end
     
     next_id = nextId
@@ -86,7 +88,8 @@ put '/bottom' do
 end
 
 get '/page/:id' do | id |
-    page_id = Integer(id)
-    @page_content = $page_content_store[page_id]
+    @page_id = Integer(id)
+    @page_content = $page_content_store[@page_id]
+    puts @page_content.top
     erb :index    
 end

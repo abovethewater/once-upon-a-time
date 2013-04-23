@@ -28,20 +28,21 @@ function setTextInLocation(location, id, text) {
 </script>
 </head>
 
-<table border="1">
-<tr>
-<td></td>
-<td id="top"><form id="top_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
-<td></td>
-</tr>
-<tr>
-<td id="left"><form id="left_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
-<td><%= @page_content.centre %></td>
-<td id="right"><form id="right_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
-</tr>
-<tr>
-<td></td>
-<td id="bottom"><form id="bottom_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
-<td></td>
-</tr>
+  
+<table border = "1">
+<% ["", "top", "", "left", "centre", "right", "", "bottom", ""].each_with_index do |location, index| %>
+    <% if [0, 3, 6].include? index %>
+    <%= "<tr>" %>
+    <% end %>
+    <td>
+    <% if location != "" &&  @page_content.send(location).nil? %>
+    <%= '<td id="' + location + '"><form id="' + location + '_form" action=""><input type="hidden" name="id" value="' + @page_id.to_s + '" /><input type="text" name="text"></input><input type="submit"></input></form></td>' %>
+    <% elsif location != "" %> 
+        <%= @page_content.send(location) %>
+    <% end %>
+    </td>
+    <% if [2, 5, 8].include? index %>
+    <%= "</tr>" %>
+    <% end %>    
+<% end %>
 </table>

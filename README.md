@@ -10,3 +10,6 @@ Once upon a time Sinatra test app
 * validate ids
 * validate text on render
 * general tidy
+
+### worth noting
+<script>setTextInLocation(<%=location%>, <%=@page_id.to_s%>, <%= @page_content.send(location) %>);</script>
