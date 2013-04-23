@@ -1,0 +1,44 @@
+
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(function (){
+$('#top_form').submit(function(ev){
+ev.preventDefault();
+ 
+//send an ajax request to our action
+$.ajax({
+url: "/top",
+//serialize the form and use it as data for our ajax request
+data: $(this).serialize(),
+type : 'PUT',
+//the type of data we are expecting back from server, could be json too
+dataType: "json",
+success: function(data) {
+    console.log(data)
+    link = "<a href=/page/" + data.id + ">";
+    $('#top').html(link + data.text + '</a>');
+}
+});
+});
+});
+</script>
+</head>
+
+<table border="1">
+<tr>
+<td></td>
+<td id="top"><form id="top_form" action=""><input type="hidden" value=<%= @id %> /><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td></td>
+</tr>
+<tr>
+<td><form action="left" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td><%= @page_content.centre %></td>
+<td><form action="right" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+</tr>
+<tr>
+<td></td>
+<td><form action="bottom" type="post"><input type="text" name="text"></input><input type="submit"></input></form></td>
+<td></td>
+</tr>
+</table>
